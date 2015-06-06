@@ -7,9 +7,25 @@
 * version: 0.5.3
 **/
 
+
+
+
+
+
+
+
 Number.prototype.clamp = function(min, max) {
   return Math.min(Math.max(this, min), max);
 };
+
+
+
+
+
+
+
+
+
 
 (function () {
 	var attachEvent = document.attachEvent,
@@ -734,15 +750,44 @@ u.Base = {
 	},
 
 
+
+	//for controlling snap
+	
+	checkDirPrev:{
+		x:-1,
+		y:-1,
+	},
+
+	snapDir: function(e){
+		if(this.v.parent != null && this.v.parent.dragger != null){
+			var dir = this.v.parent.dragger.getDirection();
+		}
+	},
+
 	initSnap: function(){
 
 		if(this.v.snap != true){
 			return;
 		}
-		console.log('init snap',this.innerNode.clientWidth)
+		//console.log('init snap',this.innerNode.clientWidth)
 		this.dragger = Draggable.create(this.innerNode,{
-		    type: (this.isVertical()) ? 'y' : 'x',
-		    edgeResistance: this.v.snapvar,
+			onDragStart: function(e){
+				//console.log('START DRAG',$(this));
+				this.snapDir();
+			}.bind(this),
+			onLockAxis: function(){
+				var dir = this.dragger.getDirection();
+				if(dir == 'right'|| dir == 'left' && this.isVertical()){
+					//this.dragger.disable();
+				}
+				console.log();
+			}.bind(this),
+			onDragEnd: function(){
+				
+			}.bind(this),
+			lockAxis: true,
+		    type: 'x,y',
+		    edgeResistance: 1,
 		    throwResistance: 5000,
 		    maxDuration: 0.5,
 		   	bounds: this.getSnapBounds(),

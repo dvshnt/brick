@@ -64,7 +64,7 @@ app.use(function(err, req, res, next) {
 });
 
 
-app.set('port', process.env.PORT || 1337);
+app.set('port', process.env.PORT || 4444);
 
 var server = app.listen(app.get('port'), function() {
   console.log('on port ' + server.address().port);
