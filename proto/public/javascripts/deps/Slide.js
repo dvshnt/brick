@@ -410,7 +410,7 @@ u.Base = {
 			//u-list
 		 	min: this.attributes['min'] != null ?  this.attributes['min'].value : null,
 			max: this.attributes['max'] != null ?  this.attributes['max'].value : null,
-			snapvar: this.attributes['snapvar'] != null ? parseInt(this.attributes['snapvar'].value) : 0.8,
+			snapvar: this.attributes['snapvar'] != null ? parseInt(this.attributes['snapvar'].value) : 0.9,
 			snap: this.attributes['snap'] != null ? ((this.attributes['snap'].value == 'true' || this.attributes['snap'].value == '1') ? true : false) : false,
 			//u-slide
 			scroll: this.attributes['scroll'] != null ? parseInt(this.attributes['scroll'].value) : -1, // -1 : static auto.  //0: slide flex. //1: scroll auto //2: scroll hover
@@ -753,14 +753,16 @@ u.Base = {
 
 	//for controlling snap
 	
-	checkDirPrev:{
-		x:-1,
-		y:-1,
-	},
 
-	snapDir: function(e){
+	snapDir: function(vert){
+		//console.log(vert,$(this));
+		if(vert != this.isVertical()){
+			this.dragger.edgeResistance = 1;
+		}
 		if(this.v.parent != null && this.v.parent.dragger != null){
-			var dir = this.v.parent.dragger.getDirection();
+			if(this.v.parent.isVertical() != vert){
+				this.v.parent.dragger.edgeResistance = 1;
+			}
 		}
 	},
 
@@ -771,19 +773,15 @@ u.Base = {
 		}
 		//console.log('init snap',this.innerNode.clientWidth)
 		this.dragger = Draggable.create(this.innerNode,{
-			onDragStart: function(e){
-				//console.log('START DRAG',$(this));
-				this.snapDir();
-			}.bind(this),
-			onLockAxis: function(){
-				var dir = this.dragger.getDirection();
-				if(dir == 'right'|| dir == 'left' && this.isVertical()){
-					//this.dragger.disable();
+			onLockAxis: function(asd){
+				if(this.dragger.lockedAxis == 'y'){
+					this.snapDir(false);
+				}else{
+					this.snapDir(true);
 				}
-				console.log();
 			}.bind(this),
 			onDragEnd: function(){
-				
+				this.dragger.edgeResistance = this.v.snapvar;
 			}.bind(this),
 			lockAxis: true,
 		    type: 'x,y',
