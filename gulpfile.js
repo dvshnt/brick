@@ -27,9 +27,19 @@ gulp.task('css',function(){
 });
 
 
+gulp.task('jade',function(){
+	return gulp.src('client/main.jade')
+		.pipe(concat('index.html'))
+		.pipe(jade())
+		.pipe(gulp.dest('client/'))
+});
+
 
 gulp.task('watch',function(){
-	gulp.watch('client/css/main.styl',['css']).on('error',function(e){
+	gulp.watch('client/css/*.styl',['css']).on('error',function(e){
+		console.log(e)
+	});
+	gulp.watch('client/*.jade',['jade']).on('error',function(e){
 		console.log(e)
 	});
 });
