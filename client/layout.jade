@@ -1,7 +1,10 @@
-div(is="u-slide" split="down" scroll="0" snap="1" height="100%" width="100%" id="top")
-	div(is="u-slide" beta="100" id="logo").flex-center.bg.section
+div(is="u-slide" split="down" scroll="0" snap="1" height="100%" width="100%")#main
+	div(is="u-slide" beta="100").flex-center.bg.section#cover
 	div(is="u-slide" beta="100" split="right" scroll="0" snap="1")#bot.light
-		div(is="u-slide" beta="100").flex-center.bg.section
+		div(is="u-slide" beta="100")#shows
 		div(is="u-slide" beta="100").flex-center.bg.section
 		div(is="u-slide" beta="100")
 		div(is="u-slide" beta="100")
+
+script(id = 'show_template' type='text/template')
+	.element.show
