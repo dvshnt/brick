@@ -3,6 +3,7 @@ _.templateSettings = {
   interpolate: /\{\{(.+?)\}\}/g
 };
 
+var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
 /*
 
 Private class for b.Main
@@ -31,7 +32,12 @@ b.Main = function(opt){
 		this.sections.forEach(function(section,i){
 			
 			this.$sections_wrapper.append(section.$el);
-			setTimeout(section.render.bind(section), 0);
+			if(isSafari){
+				setTimeout(section.render.bind(section), 0)
+			}
+			else{
+				section.render();
+			}
 			
 		}.bind(this));
 
@@ -70,11 +76,13 @@ b.Section = function(opt){
 b.Section.prototype = {
 	render : function(){
 		this.$feed_content = this.$el.find('.section_content ._intui_el');
-		console.log(this.$feed_content)
+		
 		for(var i =0;i<this.feeds.length;i++){
 			this.$feed_content.append(this.feeds[i].$el);
 		}
 	
+		
+		
 		return this;
 	}
 };
@@ -115,7 +123,7 @@ b.Feed = function(opt){
 b.Feed.prototype = {
 
 	parse: function(data){
-		console.log(data);
+	
 		this.elements = data;
 		this.render();
 	},
@@ -126,7 +134,7 @@ b.Feed.prototype = {
 			if(item.banner != null){
 				item.banner = "http://showgrid.com" + item.banner
 			}
-			console.log(this.mini_template(item))
+			
 			if(i>=3) return;
 			$(this.$minis[i]).html(this.mini_template(item));
 		}.bind(this));

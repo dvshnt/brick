@@ -1,6 +1,6 @@
 //-static application layout.
 div(is="u-slide" split="down" scroll="0" snap="1" height="100%" width="100%")#main
-	div(is="u-slide" beta="100").flex-center.bg#cover
+	div(is="u-slide" beta="100").flex-center#cover
 		|BRICK.
 	div(is="u-slide" beta="100" split="right" scroll="0" snap="1")#sections.light
 
@@ -21,10 +21,10 @@ div(is="u-slide" split="down" scroll="0" snap="1" height="100%" width="100%")#ma
 //-section template contains different feeds
 script(type='text/template')#section-template
 	div(is="u-slide" beta = '100' split = 'down').section
-		div(is="u-slide" height="50px" split = 'right').section_header
-			div(is="u-slide" beta="50" ).section_header-title
+		div(is="u-slide"  beta="15" split = 'right').section_header
+			div(is="u-slide" beta="20" height = 'auto').section_header-title.flex-center
 				|{{section_title}}
-		div(is="u-slide" beta="100" scroll = '0' split = 'down' snap = '1').section_content
+		div(is="u-slide" beta="100"  scroll = '0' split = 'down' snap = '1').section_content
 
 
 //-feed contains three elements
