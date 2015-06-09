@@ -25,11 +25,11 @@ a {
 }
 @font-face {
   font-family: Kirvy;
-  src: url("css/Kirvy-Regular.otf");
+  src: url("Kirvy-Regular.otf");
 }
 @font-face {
   font-family: Dosis;
-  src: url("css/Dosis-Light.otf");
+  src: url("Dosis-Light.otf");
 }
 #cover {
   font-size: 100px;

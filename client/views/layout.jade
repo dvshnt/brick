@@ -24,15 +24,15 @@ script(type='text/template')#section-template
 		div(is="u-slide"  beta="15" split = 'right').section_header
 			div(is="u-slide" beta="20" height = 'auto').section_header-title.flex-center
 				|{{section_title}}
-		div(is="u-slide" beta="100"  scroll = '0' split = 'down' snap = '1').section_content
+		div(is="u-slide" beta="100"  scroll = '0' split = 'down' snap = '0').section_content
 
 
 //-feed contains three elements
 script(type='text/template')#feed-template
 	div(is="u-slide" beta="100" split = 'down').feed
-		div(is="u-slide").mini-element-wrapper
-		div(is="u-slide").mini-element-wrapper
-		div(is="u-slide").mini-element-wrapper
+		div(is="u-slide" beta = '30').mini-element-wrapper
+		div(is="u-slide" beta = '30').mini-element-wrapper
+		div(is="u-slide" beta = '30').mini-element-wrapper
 
 include elements.jade
 

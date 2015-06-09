@@ -2,6 +2,9 @@ script(type='text/template')#show_element-mini
 	.mini-element
 		|{{title || headliners}}
 script(type='text/template')#show_promo_element-mini
-	div(style='background: url("{{banner}}") no-repeat center center;').mini-element
-		.mini-element-title
-			|{{title || headliners}}
+	div(is = "u-slide" scroll = '0' beta = '100' split = 'right' snap = '1').mini-element-wrapper2
+		div(is = "u-slide" beta = '100' style='background: url("{{banner}}") no-repeat center center;').mini-element
+			.mini-element-title
+				|{{title || headliners}}
+		div(is = "u-slide" beta = '50').mini-element-ctrl
+			|{{date}}
