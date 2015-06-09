@@ -11,9 +11,7 @@ body {
 a {
   color: #00b7ff;
 }
-.section {
-  font-size: 85px;
-}
+.section,
 .bg {
   background: url("./bg.jpg") no-repeat center center;
   overflow: hidden;
@@ -21,4 +19,15 @@ a {
 #shows {
   background: #000;
   color: #fff;
+}
+#cover {
+  font-size: 85px;
+}
+.feed {
+  background: -webkit-linear-gradient(45deg, #000, #fff);
+  background: linear-gradient(45deg, #000, #fff);
+}
+.mini-element {
+  width: 100%;
+  overflow: hidden;
 }

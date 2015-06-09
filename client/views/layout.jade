@@ -1,0 +1,43 @@
+//-static application layout.
+div(is="u-slide" split="down" scroll="0" snap="1" height="100%" width="100%")#main
+	div(is="u-slide" beta="100").flex-center.bg#cover
+		|BRICK.
+	div(is="u-slide" beta="100" split="right" scroll="0" snap="1")#sections.light
+
+//- script(type='section/template')#show_brick_full
+//- 	.element.show
+//- 		|{}
+//- 	.element.signup
+//- 		|{asd}
+
+
+
+
+//- script(type='text/template')#show_brick_mini
+//- 	.element.show.title
+//- 		|{{title}}
+
+
+//-section template contains different feeds
+script(type='text/template')#section-template
+	div(is="u-slide" beta = '100' split = 'down').section
+		div(is="u-slide" height="50px" split = 'right').section_header
+			div(is="u-slide" beta="50" ).section_header-title
+				|{{section_title}}
+		div(is="u-slide" beta="100" scroll = '0' split = 'down' snap = '1').section_content
+
+
+//-feed contains three elements
+script(type='text/template')#feed-template
+	div(is="u-slide" beta="100" split = 'down').feed
+		div(is="u-slide").mini-element-wrapper
+		div(is="u-slide").mini-element-wrapper
+		div(is="u-slide").mini-element-wrapper
+
+include elements.jade
+
+	//- .element.headliners.
+	//- 	{{ _.each(headliners,function(liner){
+	//- 		}}<span class='head_liner'>{{liner}}</span>{{
+	//- 	});}}
+	//- .element

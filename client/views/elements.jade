@@ -1,0 +1,6 @@
+script(type='text/template')#show_element-mini
+	.mini-element
+		|{{title || headliners}}
+script(type='text/template')#show_promo_element-mini
+	div(style='background: url("{{banner}}") no-repeat center center;').mini-element
+		|{{title || headliners}}

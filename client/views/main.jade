@@ -4,15 +4,25 @@ html
     link(rel = 'stylesheet' href="/css/style.css")
     script(src="http://code.jquery.com/jquery-2.1.4.min.js")
     script(src="/js/deps/document-register-element.js")
+    script(src="/js/deps/lodash.min.js")
+    script(src="/js/deps/Backbone.min.js")
+
     script(src="/js/deps/TweenLite.min.js")
     script(src="/js/deps/CSSPlugin.min.js")
     script(src="/js/deps/Draggable.min.js")
     script(src="/js/deps/ThrowPropsPlugin.min.js")
-    script(src="/js/deps/lodash.min.js")
+
     
     link(rel="stylesheet" href="/js/deps/style.css")
     script(src="/js/deps/Slide.js")
+
+
+
+
   body
 
     include layout.jade
-    script(src="/js/app.js")
+    
+    //-brick files
+    script(src="/js/brick.js")
+    script(src="/js/main.js")

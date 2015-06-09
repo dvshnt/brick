@@ -412,6 +412,7 @@ u.Base = {
 			max: this.attributes['max'] != null ?  this.attributes['max'].value : null,
 			snapvar: this.attributes['snapvar'] != null ? parseInt(this.attributes['snapvar'].value) : 0.9,
 			snap: this.attributes['snap'] != null ? ((this.attributes['snap'].value == 'true' || this.attributes['snap'].value == '1') ? true : false) : false,
+			autolock: this.attributes['autolock'] != null ? ((this.attributes['autolock'].value == 'true' || this.attributes['autolock'].value == '1') ? true : false) : true,
 			//u-slide
 			scroll: this.attributes['scroll'] != null ? parseInt(this.attributes['scroll'].value) : -1, // -1 : static auto.  //0: slide flex. //1: scroll auto //2: scroll hover
 			start: this.attributes['start'] != null ? ((this.attributes['start'].value == 'true' || this.attributes['start'].value == '1') ? true : false) : false,
@@ -663,8 +664,8 @@ u.Base = {
 		}
 		this.setCurrent();
 		if(this.dragger != null) this.dragger.applyBounds(this.getSnapBounds());
-		
-	},
+		return this;
+	},	
 
 
 
@@ -757,15 +758,41 @@ u.Base = {
 	snapDir: function(vert){
 		//console.log(vert,$(this));
 		if(vert != this.isVertical()){
-			this.dragger.edgeResistance = 1;
+			this.dragger.endDrag(this.dragger.pointerEvent);
 		}
 		if(this.v.parent != null && this.v.parent.dragger != null){
 			if(this.v.parent.isVertical() != vert){
-				this.v.parent.dragger.edgeResistance = 1;
+				this.v.parent.dragger.endDrag(this.v.parent.dragger.pointerEvent);
 			}
 		}
 	},
 
+	snapLock: function(vert,dirr){
+	
+		var check = function(parent){
+			if(parent != null && parent.dragger != null){
+				var dir = parent.isVertical();
+				if(dir == vert){
+					if((this.dragger.x > this.dragger.maxX-this.clientWidth/2 && dirr == 'left') || (this.dragger.y > this.dragger.maxY-this.clientHeight/2 && dirr == 'up') || (this.dragger.y < this.dragger.minY+this.clientHeight/2 && dirr == 'down') || (this.dragger.x < this.dragger.minX+this.clientWidth/2 && dirr == 'right')) {
+						this.dragger.endDrag(this.dragger.pointerEvenet);
+					}else{
+
+						
+						if(parent.v.autolock == true) parent.dragger.endDrag(parent.dragger.pointerEvenet);
+					}				
+				}
+			}
+			return false;			
+		}.bind(this);
+
+		var slide = this;
+		var parent = slide.v.parent;
+		while(parent = slide.v.parent){
+			check(parent);
+			slide = parent;
+			if(slide.v.parent == null) return;
+		}
+	},
 	initSnap: function(){
 
 		if(this.v.snap != true){
@@ -773,7 +800,19 @@ u.Base = {
 		}
 		//console.log('init snap',this.innerNode.clientWidth)
 		this.dragger = Draggable.create(this.innerNode,{
+			onDragStart: function(){
+				if(this.dragger.lockedAxis == 'y'){
+					if(this.dragger.y > this.snapDD[1]) this.snapLock(false,'right');
+					else this.snapLock(false,'left')
+
+				}else{
+					if(this.dragger.y > this.snapDD[1]) this.snapLock(true,'up');
+					else this.snapLock(true,'down')
+				}
+			this.snapDD=[]
+			}.bind(this),
 			onLockAxis: function(asd){
+				this.snapDD = [this.dragger.x,this.dragger.y];
 				if(this.dragger.lockedAxis == 'y'){
 					this.snapDir(false);
 				}else{
@@ -781,11 +820,10 @@ u.Base = {
 				}
 			}.bind(this),
 			onDragEnd: function(){
-				this.dragger.edgeResistance = this.v.snapvar;
 			}.bind(this),
 			lockAxis: true,
 		    type: 'x,y',
-		    edgeResistance: 1,
+		    edgeResistance: this.v.snapvar,
 		    throwResistance: 5000,
 		    maxDuration: 0.5,
 		   	bounds: this.getSnapBounds(),
@@ -1035,6 +1073,7 @@ u.Base = {
 		if(this.v.scroll%2 == 0){
 			//console.log(this.attributes['class']);
 			//console.log('add event listener')
+			console.log('ADD RESIZE')
 			addResizeListener(this,this.render);
 		}
 
