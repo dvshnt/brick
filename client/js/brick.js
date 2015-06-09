@@ -29,9 +29,10 @@ b.Main = function(opt){
 	this.render =  function(){
 		this.$sections_wrapper.html('');
 		this.sections.forEach(function(section,i){
-
+			
 			this.$sections_wrapper.append(section.$el);
-			section.render();
+			setTimeout(section.render.bind(section), 0);
+			
 		}.bind(this));
 
 		return this;
@@ -60,7 +61,7 @@ b.Section = function(opt){
 		section_title: this.title,
 	}));
 
-	this.$feed_content = this.$el.find('.section_content');
+
 
 	
 };
@@ -68,12 +69,10 @@ b.Section = function(opt){
 
 b.Section.prototype = {
 	render : function(){
-		console.log(this.$el)
+		this.$feed_content = this.$el.find('.section_content ._intui_el');
+		console.log(this.$feed_content)
 		for(var i =0;i<this.feeds.length;i++){
-			
-			$(this.$feed_content[0].children[0]).append(this.feeds[i].$el);
-
-
+			this.$feed_content.append(this.feeds[i].$el);
 		}
 	
 		return this;
@@ -129,7 +128,7 @@ b.Feed.prototype = {
 			}
 			console.log(this.mini_template(item))
 			if(i>=3) return;
-			this.$minis[i].innerHTML = this.mini_template(item);
+			$(this.$minis[i]).html(this.mini_template(item));
 		}.bind(this));
 
 		return this;
