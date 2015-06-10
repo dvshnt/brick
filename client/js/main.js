@@ -8,13 +8,13 @@ $(window).on('load',function(){
 		feeds: [
 			new b.Feed({
 				title: 'recently announced',
-				url: 'http://showgrid.com/i/recommended/',
-				mini_template: '#show_promo_element-mini',
+				url: 'http://showgrid.com/i/recent/',
+				mini_template: '#show_element-mini',
 			}),
 			new b.Feed({
 				title: 'on sale',
-				url: 'http://showgrid.com/i/recommended/',
-				mini_template: '#show_promo_element-mini',
+				url: 'http://showgrid.com/i/onsale/',
+				mini_template: '#show_element-mini',
 			}),
 			new b.Feed({
 				title: 'recommended shows',
@@ -23,8 +23,31 @@ $(window).on('load',function(){
 			})
 		]
 	});
-
+	var shows_section2 = new b.Section({
+		el: '#shows',
+		title: 'Shows',
+		feeds: [
+			new b.Feed({
+				title: 'recently announced',
+				url: 'http://showgrid.com/i/recent/',
+				mini_template: '#show_element-mini',
+			}),
+			new b.Feed({
+				title: 'on sale',
+				url: 'http://showgrid.com/i/onsale/',
+				mini_template: '#show_element-mini',
+			}),
+			new b.Feed({
+				title: 'recommended shows',
+				url: 'http://showgrid.com/i/recommended/',
+				mini_template: '#show_promo_element-mini', //c
+			})
+		]
+	});
 	main.add(shows_section);
-
+	main.add(shows_section2);
+	setTimeout(function() {
+		window.scrollTo(0,100)
+	}, 1000);
 	main.render();
 });

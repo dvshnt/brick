@@ -18,7 +18,7 @@ Brick Main module initializes everything including the cover.
 */
 b.Main = function(opt){
 	this.$el = $('#main');
-	this.$sections_wrapper = $('#sections');
+	this.$sections_wrapper = $($('#sections')[0].innerNode);
 	//this.cover = new b._Cover();
 	this.sections =  [];
 
