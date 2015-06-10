@@ -7,6 +7,7 @@ body {
   box-sizing: border-box;
 }
 body {
+  overflow-x: hidden;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 a {

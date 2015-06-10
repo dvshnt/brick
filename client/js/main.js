@@ -23,6 +23,7 @@ $(window).on('load',function(){
 			})
 		]
 	});
+
 	var shows_section2 = new b.Section({
 		el: '#shows',
 		title: 'Shows',
@@ -52,17 +53,19 @@ $(window).on('load',function(){
 	// var e = document.createEvent('UIEvents');
 	// e.initUIEvent('scroll',false,true,window);
 	window.addEventListener('scroll',function(e){
-		console.log(e)
+		console.log('SCROLL EVENT SUCCESFULL!',e);
 	});
 // window.addEventListener('scroll',function(e){
 // 	console.log(e)
 // });
 
-// document.getElementById('main').dragger.addEventListener('drag',function(e){
-// 	//console.log(this.pointerEvent);
-// 	document.dispatchEvent(this.pointerEvent);
-// }.bind(document.getElementById('main').dragger));
-//var e = new document.defaultView.CustomEvent('scroll');
+document.getElementById('main').dragger.addEventListener('drag',function(e){
+	var e = document.createEvent('UIEvents');
+	console.log('test')
+	e.initUIEvent('scroll',false,true,window);
+	window.dispatchEvent(e);
+}.bind(document.getElementById('main').dragger));
+var e = new document.defaultView.CustomEvent('scroll');
 
 
 
