@@ -1081,7 +1081,7 @@ u.Base = {
 		if(this.v.scroll%2 == 0){
 			//console.log(this.attributes['class']);
 			//console.log('add event listener')
-			console.log('ADD RESIZE')
+			//console.log('ADD RESIZE')
 			addResizeListener(this,this.render);
 		}
 

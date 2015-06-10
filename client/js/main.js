@@ -46,8 +46,24 @@ $(window).on('load',function(){
 	});
 	main.add(shows_section);
 	main.add(shows_section2);
-	setTimeout(function() {
-		window.scrollTo(0,100)
-	}, 1000);
 	main.render();
+
+
+	// var e = document.createEvent('UIEvents');
+	// e.initUIEvent('scroll',false,true,window);
+	window.addEventListener('scroll',function(e){
+		console.log(e)
+	});
+// window.addEventListener('scroll',function(e){
+// 	console.log(e)
+// });
+
+// document.getElementById('main').dragger.addEventListener('drag',function(e){
+// 	//console.log(this.pointerEvent);
+// 	document.dispatchEvent(this.pointerEvent);
+// }.bind(document.getElementById('main').dragger));
+//var e = new document.defaultView.CustomEvent('scroll');
+
+
+
 });

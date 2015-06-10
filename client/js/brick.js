@@ -113,7 +113,7 @@ b.Feed = function(opt){
 	this.$el = $(this.template());
 	this.$minis = this.$el.find('.mini-element-wrapper');
 	
-	console.log(this.$el)
+//	console.log(this.$el)
 
 	$.getJSON(this.url).done(this.parse.bind(this));
 };
