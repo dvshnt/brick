@@ -767,36 +767,62 @@ u.Base = {
 		}
 	},
 
+
+
 	snapLock: function(vert,dirr){
-	
+		
+
+		var overflow = function(){
+			var last = this.slides[this.slides.length-1];
+			var max_x = this.dragger.maxX-last.clientWidth/2;
+			var max_y = this.dragger.maxY-last.clientHeight/2;
+			var min_y = this.dragger.minY+last.clientHeight/2;
+			var min_x = this.dragger.minX+last.clientWidth/2;
+			if((this.dragger.x > max_x && dirr == 'left') || (this.dragger.y > max_y && dirr == 'up') || (this.dragger.y < min_y && dirr == 'down') || (this.dragger.x < min_x && dirr == 'right')){
+				if(this.dragger.y > max_y && dirr == 'up'){
+					this.call('drag-overflow-up');
+				}else if(this.dragger.y < min_y && dirr == 'down'){
+					this.call('drag-overflow-down');
+				}else if((this.dragger.x > max_x && dirr == 'left')){
+					this.call('drag-overflow-left');
+				}else if(this.dragger.x < min_x && dirr == 'right'){
+					this.call('drag-overflow-right');
+				}
+				return true
+			}
+			return false
+		}.bind(this)
+		overflow();
+
 		var check = function(parent){
 			if(parent != null && parent.dragger != null){
 				var dir = parent.isVertical();
 				if(dir == vert){
-					var last = this.slides[this.slides.length-1];
-					var max_x = this.dragger.maxX-last.clientWidth/2;
-					var max_y = this.dragger.maxY-last.clientHeight/2;
-					var min_y = this.dragger.minY+last.clientHeight/2;
-					var min_x = this.dragger.minX+last.clientWidth/2;
-					
-					if((this.dragger.x > max_x && dirr == 'left') || (this.dragger.y > max_y && dirr == 'up') || (this.dragger.y < min_y && dirr == 'down') || (this.dragger.x < min_x && dirr == 'right')) 
-					{
-		
-						this.dragger.endDrag(this.dragger.pointerEvenet);
-					}else{
 
+					
+					if(overflow() == true){
+
+						return true
 						
-						if(parent.v.autolock == true) parent.dragger.endDrag(parent.dragger.pointerEvenet);
+					}else{
+						
+						
+						if(parent.v.autolock == true) return false 
 					}				
 				}
 			}
-			return false;			
+			return null;			
 		}.bind(this);
 
 		var slide = this;
 		var parent = slide.v.parent;
 		while(parent = slide.v.parent){
-			check(parent);
+			var c =check(parent);
+			if(c == true){
+				this.dragger.endDrag(this.dragger.pointerEvent);
+			}else if(c == false){
+				parent.dragger.endDrag(parent.dragger.pointerEvenet);
+			}
 			slide = parent;
 			if(slide.v.parent == null) return;
 		}
@@ -809,6 +835,7 @@ u.Base = {
 		//console.log('init snap',this.innerNode.clientWidth)
 		this.dragger = Draggable.create(this.innerNode,{
 			onDragStart: function(){
+				this.call('drag-start');
 				if(this.dragger.lockedAxis == 'y'){
 					if(this.dragger.x > this.snapDD[0]) this.snapLock(false,'left');
 					else this.snapLock(false,'right')

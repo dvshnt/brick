@@ -47,26 +47,20 @@ $(window).on('load',function(){
 	});
 	main.add(shows_section);
 	main.add(shows_section2);
+	
 	main.render();
+	console.log($('.section_content'))
+	$('.section_content').each(function(i,el){
+		console.log(el)
+		el.on('drag-overflow-up',function(){
+			console.log('OVERFLOW UP')
+			$('body')[0].style.overflowY = 'visible'
+		}.bind(el));
 
-
-	// var e = document.createEvent('UIEvents');
-	// e.initUIEvent('scroll',false,true,window);
-	window.addEventListener('scroll',function(e){
-		console.log('SCROLL EVENT SUCCESFULL!',e);
-	});
-// window.addEventListener('scroll',function(e){
-// 	console.log(e)
-// });
-
-document.getElementById('main').dragger.addEventListener('drag',function(e){
-	var e = document.createEvent('UIEvents');
-	console.log('test')
-	e.initUIEvent('scroll',false,true,window);
-	window.dispatchEvent(e);
-}.bind(document.getElementById('main').dragger));
-var e = new document.defaultView.CustomEvent('scroll');
-
-
-
+		el.on('drag-start',function(){
+			$('body')[0].style.overflowY = 'hidden'
+		}.bind(el));
+	})
+	 $('#main')[0].render();
+	//setTimeout(main.render.bind(main), 10);
 });
