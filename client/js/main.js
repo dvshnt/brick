@@ -17,7 +17,7 @@ $(window).on('load',function(){
 			new b.Feed({
 				title: 'on sale',
 				url: 'http://showgrid.com/i/onsale/',
-				mini_template: '#show_element-mini',
+				mini_template: '#show_sale_element-mini',
 			}),
 			new b.Feed({
 				title: 'recommended shows',
@@ -85,7 +85,7 @@ $(window).on('load',function(){
 	}
 
 	$('.section_content').each(function(i,el){
-		el.on('drag-overflow-up',function(){
+		el.on('snap-top',function(){
 			console.log('ENABLE NATIVE SCROLLING')
 			disable();
 		}.bind(el));

@@ -1,7 +1,12 @@
 script(type='text/template')#show_element-mini
-	.mini-element-title
+	.show_element-mini
 		|{{title || headliners}}
+
+script(type='text/template')#show_sale_element-mini
+	.show_sale_element-mini
+		|{{title || headliners}}
+
 script(type='text/template')#show_promo_element-mini
-		div(style='background: url("{{banner}}") no-repeat center center;').mini-element
+		div(style='background: url("{{banner}}") no-repeat center center;').mini-element.promoted-mini
 			.mini-element-title
 				|{{title || headliners}}

@@ -844,7 +844,7 @@ u.Base = {
 					if(this.dragger.y > this.snapDD[1]) this.snapLock(true,'up');
 					else this.snapLock(true,'down')
 				}
-			this.snapDD=[]
+			
 			}.bind(this),
 			onLockAxis: function(asd){
 				this.snapDD = [this.dragger.x,this.dragger.y];
@@ -854,7 +854,11 @@ u.Base = {
 					this.snapDir(true);
 				}
 			}.bind(this),
-			onDragEnd: function(){
+			onDragEnd: function(e){
+				console.log(this.dragger.y,this.snapDD[1])
+				if(this.dragger_snap_top==1 && this.dragger.y > this.snapDD[1]){
+					this.call('snap-top')
+				}
 			}.bind(this),
 			lockAxis: true,
 		    type: 'x,y',
@@ -865,10 +869,18 @@ u.Base = {
 		    throwProps:true,
 		    snap:{
 		        x: function(endValue){
+		        	
+	
 		            return Math.round(endValue / this.clientWidth) * this.clientWidth
 		        }.bind(this),
 		        y: function(endValue){
-		           return Math.round(endValue / this.clientHeight) * this.clientHeight
+		        	endValue = Math.round(endValue / this.clientHeight) * this.clientHeight
+		        	if(endValue > -this.clientHeight){
+		        		this.dragger_snap_top = 1;
+		        	}else{
+		        		this.dragger_snap_top = 0;
+		        	}
+		           return endValue
 		        }.bind(this)
 		    }
 		})[0];
