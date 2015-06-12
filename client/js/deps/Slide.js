@@ -411,7 +411,7 @@ u.Base = {
 		 	min: this.attributes['min'] != null ?  this.attributes['min'].value : null,
 			max: this.attributes['max'] != null ?  this.attributes['max'].value : null,
 			snapvar: this.attributes['snapvar'] != null ? parseInt(this.attributes['snapvar'].value) : 0.9,
-			snap: this.attributes['snap'] != null ? ((this.attributes['snap'].value == 'true' || this.attributes['snap'].value == '1') ? true : false) : false,
+			snap: this.attributes['snap'] != null ? parseInt(this.attributes['snap'].value) : 0,
 			autolock: this.attributes['autolock'] != null ? ((this.attributes['autolock'].value == 'true' || this.attributes['autolock'].value == '1') ? true : false) : true,
 			//u-slide
 			scroll: this.attributes['scroll'] != null ? parseInt(this.attributes['scroll'].value) : -1, // -1 : static auto.  //0: slide flex. //1: scroll auto //2: scroll hover
@@ -827,13 +827,17 @@ u.Base = {
 			if(slide.v.parent == null) return;
 		}
 	},
+	snapDD: [],
 	initSnap: function(){
 
-		if(this.v.snap != true){
+		if(this.v.snap < 1 ){
 			return;
 		}
 		//console.log('init snap',this.innerNode.clientWidth)
+
 		this.dragger = Draggable.create(this.innerNode,{
+
+		//	trigger: '#minimalui-spoof',
 			onDragStart: function(){
 				this.call('drag-start');
 				if(this.dragger.lockedAxis == 'y'){
@@ -848,17 +852,32 @@ u.Base = {
 			}.bind(this),
 			onLockAxis: function(asd){
 				this.snapDD = [this.dragger.x,this.dragger.y];
+	
 				if(this.dragger.lockedAxis == 'y'){
 					this.snapDir(false);
 				}else{
 					this.snapDir(true);
 				}
 			}.bind(this),
+		
 			onDragEnd: function(e){
-				console.log(this.dragger.y,this.snapDD[1])
-				if(this.dragger_snap_top==1 && this.dragger.y > this.snapDD[1]){
-					this.call('snap-top')
+				if(this.dragger.lockedAxis == 'x'){
+					if(this.dragger.y > this.snapDD[1]){
+						this.call('snap-up');
+					}else if(this.dragger.y < this.snapDD[1]){
+						this.call('snap-down');
+					}
 				}
+				
+					if(this.dragger.snap_bot){
+						console.log('SNAP BOT')
+						this.call('snap-bot')
+					}else if(this.dragger.snap_top){
+						console.log('SNAP TOP')
+						this.call('snap-top')
+					}
+				
+
 			}.bind(this),
 			lockAxis: true,
 		    type: 'x,y',
@@ -869,16 +888,23 @@ u.Base = {
 		    throwProps:true,
 		    snap:{
 		        x: function(endValue){
-		        	
+		        	if(this.v.snap == 2) return endValue
 	
 		            return Math.round(endValue / this.clientWidth) * this.clientWidth
 		        }.bind(this),
 		        y: function(endValue){
+		        	if(this.v.snap == 2) return endValue
 		        	endValue = Math.round(endValue / this.clientHeight) * this.clientHeight
-		        	if(endValue > -this.clientHeight){
-		        		this.dragger_snap_top = 1;
+		        	console.log(endValue,this.dragger.minY)
+		        	if(endValue <= this.dragger.minY){
+		        		this.dragger.snap_bot = true;
+		        		this.dragger.snap_top = false;
+		        	}else if(endValue > -this.clientHeight){
+		        		this.dragger.snap_bot = false;
+		        		this.dragger.snap_top = true;
 		        	}else{
-		        		this.dragger_snap_top = 0;
+		        		this.dragger.snap_bot = false;
+		        		this.dragger.snap_top = false;
 		        	}
 		           return endValue
 		        }.bind(this)
@@ -1179,6 +1205,9 @@ u.Button = (function(){
 	};
 
 	proto.attachedCallback = function(){
+
+
+
 		var $this = $(this);
 
 
@@ -1311,6 +1340,7 @@ u.Slide = (function(){
 
 	proto.attachedCallback = function(){
 		this.start();
+		//console.log('STARTED')
 	};
 
 	proto.detachedCallback = function(){

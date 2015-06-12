@@ -17,7 +17,9 @@ Brick Main module initializes everything including the cover.
 
 */
 b.Main = function(opt){
+
 	this.$el = $('#main');
+	this.el = this.$el[0];
 	this.$sections_wrapper = $($('#sections')[0].innerNode);
 	//this.cover = new b._Cover();
 	this.sections =  [];
@@ -32,12 +34,16 @@ b.Main = function(opt){
 		this.sections.forEach(function(section,i){
 			
 			this.$sections_wrapper.append(section.$el);
+			
 			if(isSafari){
-				setTimeout(section.render.bind(section), 0)
-			}
-			else{
+
+				setTimeout(section.render.bind(section), 0);
+			}else{
 				section.render();
 			}
+			
+			
+			
 			
 		}.bind(this));
 
@@ -63,24 +69,20 @@ b.Section = function(opt){
 	this.title = opt.title;
 	this.feeds = opt.feeds;
 
-	this.$el = $(this.template({
-		section_title: this.title,
-	}));
-
-
-
-	
+	this.$el = $(this.template());
 };
+
 
 
 b.Section.prototype = {
 	render : function(){
-		this.$feed_content = this.$el.find('.section_content ._intui_el');
+		this.$section_content = this.$el.find('._intui_el');
 		
 		for(var i =0;i<this.feeds.length;i++){
-			this.$feed_content.append(this.feeds[i].$el);
+			this.$section_content.append(this.feeds[i].$el);
+			this.feeds[i].get();
 		}
-	
+		
 		
 		
 		return this;
@@ -104,39 +106,44 @@ b.Feed = function(opt){
 
 	this.url = opt.url;
 	this.elements = [];
-
+	this.size = opt.size || 50;
 
 	this.mini_template = _.template($(opt.mini_template).html());
 	this.template = _.template($('#feed-template').html());
 
 
-	this.$el = $(this.template());
-	this.$minis = this.$el.find('.mini-element-wrapper');
-	
-//	console.log(this.$el)
-
-	$.getJSON(this.url).done(this.parse.bind(this));
+	this.$el = $(this.template({
+		feed_title: this.title
+	}));
 };
 
 
 
 b.Feed.prototype = {
-
+	get: function(){
+		$.getJSON(this.url).done(this.parse.bind(this));
+	},
 	parse: function(data){
-	
+		
 		this.elements = data;
 		this.render();
+		setTimeout(this.$el[0].renderall.bind(this.$el[0]), 0);
 	},
 
 	render: function(){
-		this.$el.find('.mini-element-wrapper').html('');
+		this.$container = this.$el.find('.feed-container ._intui_el');
+		this.$container.html('');
 		this.elements.forEach(function(item,i){
 			if(item.banner != null){
 				item.banner = "http://showgrid.com" + item.banner
 			}
+			item.size = this.size;
+			item.bg = i%2 == 0 ? '#304744' : '#1A2625';
 			
-			if(i>=3) return;
-			$(this.$minis[i]).html(this.mini_template(item));
+			if(i>=5) return;
+			this.$container.append(this.mini_template(item));
+
+			
 		}.bind(this));
 
 		return this;

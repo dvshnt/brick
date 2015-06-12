@@ -1,43 +1,22 @@
 //-static application layout.
-div(is="u-slide" split="down"  height="200vh" width="100vw")#main
-	div(is="u-slide" beta="50").flex-center#cover
+
+div(is="u-slide" split="down" scroll = '0' snap = '1' height="100vh" width="100vw")#main
+	div(is="u-slide" beta="100").flex-center#cover
 		|BRICK.
-	div(is="u-slide" beta="50" split="right" scroll="0" snap="1")#sections.light
-
-//- script(type='section/template')#show_brick_full
-//- 	.element.show
-//- 		|{}
-//- 	.element.signup
-//- 		|{asd}
+	div(is="u-slide" beta="100" split="right" scroll="0" snap="1")#sections.light
+#minimalui-spoof
 
 
 
-
-//- script(type='text/template')#show_brick_mini
-//- 	.element.show.title
-//- 		|{{title}}
-
-
-//-section template contains different feeds
 script(type='text/template')#section-template
-	div(is="u-slide" beta = '100' split = 'down').section
-		//- div(is="u-slide"  beta="5" split = 'right').section_header
-			//- div(is="u-slide" beta="20" height = 'auto').section_header-title.flex-center
-			//- 	|{{section_title}}
-		div(is="u-slide" beta="100"  scroll = '0' split = 'down' snap = '1').section_content
+	div(is="u-slide" beta = '100' split = 'down' snap = '1' scroll='0').section
 
 
-//-feed contains three elements
+//-feed contains elements (a show/ticket/news article/whatever)
 script(type='text/template')#feed-template
 	div(is="u-slide" beta="100" split = 'down').feed
-		div(is="u-slide" ).mini-element-wrapper
-		div(is="u-slide" ).mini-element-wrapper
-		div(is="u-slide" ).mini-element-wrapper
+		div(is="u-slide" height = '40px' split = 'down' ).feed-title.flex-center
+			|{{feed_title}}
+		div(is="u-slide" beta="100" split = 'down' snap = '1' scroll='0').feed-container
 
 include elements.jade
-
-	//- .element.headliners.
-	//- 	{{ _.each(headliners,function(liner){
-	//- 		}}<span class='head_liner'>{{liner}}</span>{{
-	//- 	});}}
-	//- .element

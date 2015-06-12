@@ -28,7 +28,7 @@ gulp.task('css',function(){
 
 
 gulp.task('jade',function(){
-	return gulp.src('client/views/main.jade')
+	return gulp.src('client/views/header.jade')
 		.pipe(concat('index.html'))
 		.pipe(jade())
 		.pipe(gulp.dest('client/'))
