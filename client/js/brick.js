@@ -105,6 +105,8 @@ b.Feed = function(opt){
 	this.title = opt.title;
 
 	this.url = opt.url;
+	this.max = opt.max || 5;
+	this.overflow = opt.overflow == true ? 1 : 0;
 	this.elements = [];
 	this.size = opt.size || 50;
 
@@ -113,7 +115,8 @@ b.Feed = function(opt){
 
 
 	this.$el = $(this.template({
-		feed_title: this.title
+		feed_title: this.title,
+		overflow: this.overflow
 	}));
 };
 
@@ -131,7 +134,7 @@ b.Feed.prototype = {
 	},
 
 	render: function(){
-		this.$container = this.$el.find('.feed-container ._intui_el');
+		this.$container = this.overflow ? this.$el.find('.feed-container ._intui_el') : this.$el.find('.feed-container');
 		this.$container.html('');
 		this.elements.forEach(function(item,i){
 			if(item.banner != null){
@@ -139,8 +142,9 @@ b.Feed.prototype = {
 			}
 			item.size = this.size;
 			item.bg = i%2 == 0 ? '#304744' : '#1A2625';
+			item.overflow = this.overflow;
 			
-			if(i>=5) return;
+			if(i>=this.max) return;
 			this.$container.append(this.mini_template(item));
 
 			

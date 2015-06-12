@@ -17,6 +17,6 @@ script(type='text/template')#feed-template
 	div(is="u-slide" beta="100" split = 'down').feed
 		div(is="u-slide" height = '40px' split = 'down' ).feed-title.flex-center
 			|{{feed_title}}
-		div(is="u-slide" beta="100" split = 'down' snap = '1' scroll='0').feed-container
+		div(is="u-slide" beta="100" split = 'down' snap = '{{overflow}}' scroll='{{-1+overflow}}').feed-container
 
 include elements.jade
