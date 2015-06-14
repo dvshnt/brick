@@ -1,9 +1,9 @@
 //-static application layout.
 
-div(is="u-slide" split="down" scroll = '0' snap = '1' height="100vh" width="100vw")#main
+div(is="u-slide" split="down" scroll = '0' snap = '1'  height="100vh" width="100vw")#main
 	div(is="u-slide" beta="100").flex-center#cover
 		|BRICK.
-	div(is="u-slide" beta="100" split="right" scroll="0" snap="1")#sections.light
+	div(is="u-slide" beta="100" split="right" scroll="0" snap="1")#sections
 #minimalui-spoof
 
 
@@ -15,7 +15,7 @@ script(type='text/template')#section-template
 //-feed contains elements (a show/ticket/news article/whatever)
 script(type='text/template')#feed-template
 	div(is="u-slide" beta="100" split = 'down').feed
-		div(is="u-slide" height = '40px' split = 'down' ).feed-title.flex-center
+		div(is="u-slide" height = '30px' split = 'down').feed-title.flex-center
 			|{{feed_title}}
 		div(is="u-slide" beta="100" split = 'down' snap = '{{overflow}}' scroll='{{-1+overflow}}').feed-container
 

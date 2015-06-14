@@ -155,6 +155,7 @@ Number.prototype.clamp = function(min, max) {
 	};
 	
 	window.removeResizeListener = function(element, fn){
+		if(element.__resizeListeners__ == null) return;
 		if (attachEvent) element.detachEvent('onresize', fn);
 		else {
 			element.__resizeListeners__.splice(element.__resizeListeners__.indexOf(fn), 1);
@@ -895,7 +896,7 @@ u.Base = {
 		        y: function(endValue){
 		        	if(this.v.snap == 2) return endValue
 		        	endValue = Math.round(endValue / this.clientHeight) * this.clientHeight
-		        	console.log(endValue,this.dragger.minY)
+		        	//console.log(endValue,this.dragger.minY)
 		        	if(endValue <= this.dragger.minY){
 		        		this.dragger.snap_bot = true;
 		        		this.dragger.snap_top = false;
@@ -1159,7 +1160,6 @@ u.Base = {
 	},
 
 	end:function(){
-
 		this.isNested = false;
 		if(this.v == null) return;
 		if(this.v.parent == null) return;
@@ -1239,9 +1239,10 @@ u.Button = (function(){
 
 
 		var dd =  d/4;
-		var bg = $this.css('background').match(/^(rgb|rgba)\((.+)\)/) != null ? $this.css('background').match(/^(rgb|rgba)\((.+)\)/)[0] : '';
+		// var bg = $this.css('background').match(/^(rgb|rgba)\((.+)\)/) != null ? $this.css('background').match(/^(rgb|rgba)\((.+)\)/)[0] : '';
+		// console.log($this.css('background-color'))
 		var style1 = 'color:'+$this.css('color')+'; background:'+$this.css('background')+';';
-		var style2 = 'color:'+bg+'; background:'+$this.css('color')+';';
+		var style2 = 'color:'+$this.css('background-color')+'; background:'+$this.css('color')+';';
 
 		var icon_name = this.children[0] ? '<i class = '+this.children[0].localName+'></i>' : '';
 
@@ -1291,6 +1292,7 @@ u.Button = (function(){
 	};
 
 	proto.detachedCallback = function(){
+		console.log('DETACH',console.trace())
 		this.end();
 	};
 

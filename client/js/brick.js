@@ -141,7 +141,7 @@ b.Feed.prototype = {
 				item.banner = "http://showgrid.com" + item.banner
 			}
 			item.size = this.size;
-			item.bg = i%2 == 0 ? '#304744' : '#1A2625';
+			item.bg = i%2 == 0 ? '#000' : '#fff';
 			item.overflow = this.overflow;
 			
 			if(i>=this.max) return;

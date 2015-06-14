@@ -1,15 +1,16 @@
 script(type='text/template')#show_element-mini
 	div(is = 'u-slide' beta = '{{size}}' style = 'background-color: {{bg}};').mini-element-wrapper.flex-center
-		.show_element-mini
-			|{{title || headliners}}
+		.mini-element.show_element-mini
+			//- |{{title || headliners}}
 
 script(type='text/template')#show_sale_element-mini
 	div(is = 'u-slide' beta = '{{size}}' style = 'background-color: {{bg}};').mini-element-wrapper.flex-center
-		.show_sale_element-mini
-			|{{title || headliners}}
+		.mini-element.show_sale_element-mini
+			//- |{{title || headliners}}
 
 script(type='text/template')#show_promo_element-mini
-	div(is = 'u-slide' beta = '{{size}}' style = ' background-color: {{bg}};').mini-element-wrapper
-		div(style='width: 100%; background: url("{{banner}}") no-repeat center center;').mini-element.promoted-mini
+	div(is = 'u-slide' beta = '{{size}}' style = 'overflow:hidden;').mini-element-wrapper.flex-center
+		.promoted-mini
+			img(src='{{banner}}' style = 'position: relative; width: 150%; height: auto; -webkit-transform:translate(-15%,-15%);')
 			.mini-element-title
-				|{{title || headliners}}
+				//- |{{title || headliners}}

@@ -19,7 +19,7 @@ window.addEventListener('DOMContentLoaded',function(){
 				title: 'on sale',
 				url: 'http://showgrid.com/i/onsale/',
 				mini_template: '#show_sale_element-mini',
-				size: 34,
+				size: 100,
 				overflow: true,
 				max: 5
 			}),
@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded',function(){
 				title: 'recently announced',
 				url: 'http://showgrid.com/i/recent/',
 				mini_template: '#show_element-mini',
-				size: 34,
+				size: 100,
 				overflow: true,
 				max: 5
 			})]
@@ -92,26 +92,36 @@ window.addEventListener('DOMContentLoaded',function(){
 		}
 	});
 
+	
+	window.scroll(0,0)
 	setTimeout(function(){
 		window.scroll(0,0)
-	}, 1)
+
+	}, 0)
 	
+	setTimeout(function(){
+		window.scroll(0,0)
 
-
+	},50)
+	
+	// $(window).on('scroll',function(e){
+	// 	console.log(window.scrollY)
+	// 	if(window.scrollY>=10){
+	// 		main.el.slide(main.el.slides[1],1000);
+	// 		spoof[0].style.display = 'none'
+	// 	}
+	// })
+	
 
 	//WHEN DISPLAY IS VISIBLE.
 	spoof.on('touchstart',function(e){
+		window.scroll(0,0)
+//		main.el.dragger.enableTween(0.3);
 		main.el.dragger.startDrag(e.originalEvent)
 	}.bind(this));
 
-	
-	
-	
-
-	$(window).on('touchmove',function(e){
-		main.el.dragger.drag(e.originalEvent)
-	});
 	spoof.on('touchend',function(e){
+		main.el.dragger.disableTween();
 		main.el.dragger.endDrag(e.originalEvent)
 	});
 });
