@@ -412,6 +412,7 @@ u.Base = {
 		 	min: this.attributes['min'] != null ?  this.attributes['min'].value : null,
 			max: this.attributes['max'] != null ?  this.attributes['max'].value : null,
 			snapvar: this.attributes['snapvar'] != null ? parseInt(this.attributes['snapvar'].value) : 0.9,
+			throwvar: this.attributes['throwvar'] != null ? parseInt(this.attributes['throwvar'].value) : 5000,
 			snap: this.attributes['snap'] != null ? parseInt(this.attributes['snap'].value) : 0,
 			autolock: this.attributes['autolock'] != null ? ((this.attributes['autolock'].value == 'true' || this.attributes['autolock'].value == '1') ? true : false) : true,
 			//u-slide
@@ -871,10 +872,10 @@ u.Base = {
 				}
 				
 					if(this.dragger.snap_bot){
-						console.log('SNAP BOT')
+						//console.log('SNAP BOT')
 						this.call('snap-bot')
 					}else if(this.dragger.snap_top){
-						console.log('SNAP TOP')
+						//console.log('SNAP TOP')
 						this.call('snap-top')
 					}
 				
@@ -883,7 +884,7 @@ u.Base = {
 			lockAxis: true,
 		    type: 'x,y',
 		    edgeResistance: this.v.snapvar,
-		    throwResistance: 5000,
+		    throwResistance: this.v.throwvar,
 		    maxDuration: 0.5,
 		   	bounds: this.getSnapBounds(),
 		    throwProps:true,

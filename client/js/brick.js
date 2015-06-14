@@ -16,9 +16,28 @@ Private class for b.Main
 Brick Main module initializes everything including the cover.
 
 */
+b.Cover = function(opt){
+	this.el = $(opt.el)
+	this.addArrow = function(){
+
+	};
+	this.animateArrow = function(){
+
+	};
+}
+
+
+
 b.Main = function(opt){
 
 	this.$el = $('#main');
+
+
+
+	this.cover = opt.cover || new b.Cover({
+		el: $('#cover')
+	})
+
 	this.el = this.$el[0];
 	this.$sections_wrapper = $($('#sections')[0].innerNode);
 	//this.cover = new b._Cover();
@@ -141,7 +160,7 @@ b.Feed.prototype = {
 				item.banner = "http://showgrid.com" + item.banner
 			}
 			item.size = this.size;
-			item.bg = i%2 == 0 ? '#000' : '#fff';
+			item.bg = '';
 			item.overflow = this.overflow;
 			
 			if(i>=this.max) return;
